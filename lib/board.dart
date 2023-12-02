@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:tetris_game/piece.dart';
 import 'package:tetris_game/pixel.dart';
+import 'package:tetris_game/values.dart';
 
 class GameBoard extends StatefulWidget {
   const GameBoard({Key? key}) : super(key: key);
@@ -9,9 +13,32 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  // LET'S CREATE OUR GRID DIMENSIONS
-  int rowLength = 10;
-  int collength = 15;
+
+  
+  //LETS CREATE THE CURRENT TETRIS PIECE
+  Piece currPiece =Piece(type: Tetronim.L);
+
+  @override
+  void initState(){
+    super.initState();
+    //we start the game when the app starts
+    startGame();
+  }
+  void startGame(){
+    currPiece.initializePiece();
+    //our frame refresh rate
+    Duration frameRate=const Duration(milliseconds: 400);
+    gameLoop(frameRate);
+  }
+  void gameLoop(Duration frameRate){
+    Timer.periodic(
+      frameRate,
+        (timer){
+        //This will move the piece down
+          currPiece.movePiece(Direction.down);
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +51,18 @@ class _GameBoardState extends State<GameBoard> {
           crossAxisCount: rowLength,
         ),
         // This is the slivergridelegatewithCrossAxisCount
-        itemBuilder: (context, index) => Pixel(
-            color:Colors.grey[900],
-          child: index,
-        ),
+        itemBuilder: (context, index) {
+          if(currPiece.position.contains(index)) {
+            return Pixel(
+              color: Colors.yellow,
+              child: index,
+            );
+          }
+          else{
+            return Pixel(color: Colors.grey[900], child: index,
+            );
+          }
+  },
 
         ),
       );
