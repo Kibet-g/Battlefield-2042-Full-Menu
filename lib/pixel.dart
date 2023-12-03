@@ -12,7 +12,7 @@ class Pixel extends StatelessWidget {
       child: Center(
         child: Text(
             child.toString(),
-            style: TextStyle(color: Colors.white)),),
+            style: const TextStyle(color: Colors.white)),),
     );
   }
 }
