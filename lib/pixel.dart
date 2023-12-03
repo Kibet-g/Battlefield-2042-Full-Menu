@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 class Pixel extends StatelessWidget {
   var color;
   var child;
-   Pixel({super.key, required this.color,required this.child,});
+   Pixel({super.key,
+     required this.color,
+     required this.child,
+   });
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class Pixel extends StatelessWidget {
       child: Center(
         child: Text(
             child.toString(),
-            style: TextStyle(color: Colors.white)),),
+            style: const TextStyle(color: Colors.white)),),
     );
   }
 }
