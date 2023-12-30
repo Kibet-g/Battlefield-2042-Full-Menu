@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'values.dart';
 class Piece {
   // The type of the tetris piece
@@ -6,6 +8,13 @@ class Piece {
   Piece({required this.type});
   List<int> position = [];
 
+  //COLOR OF THE TETRIS PIECE
+  Color get color {
+    return tetrominoColors[type] ??
+        const Color(
+            0xFFFFFFFF); //Always allocate white color if no color us found
+
+  }
   // LET US NOW GENERATE THE INTEGERS
   void initializePiece() {
     switch (type) {

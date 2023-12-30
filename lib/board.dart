@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tetris_game/piece.dart';
@@ -43,7 +44,7 @@ class _GameBoardState extends State<GameBoard> {
   void startGame(){
     currPiece.initializePiece();
     //our frame refresh rate
-    Duration frameRate=const Duration(milliseconds: 800);
+    Duration frameRate=const Duration(milliseconds: 400);
     gameLoop(frameRate);
   }
   void gameLoop(Duration frameRate){
@@ -88,7 +89,8 @@ class _GameBoardState extends State<GameBoard> {
     return false;
   }
     //we also check the tetris box landing and say
-    void checkLanding() { if (checkCollision(Direction.down)){
+    void checkLanding() {
+    if (checkCollision(Direction.down)){
       //we mark the position as occupied by the game board
       for(int i=0; i<currPiece.position.length; i++){
         int row = (currPiece.position[i]/rowLength).floor();
@@ -103,9 +105,13 @@ class _GameBoardState extends State<GameBoard> {
     }
     }
     void createNewPiece(){
-
-
-    }
+    //create a random object to generate random tetromino types
+      Random rand= Random();
+      //create the new piece with any random type of integer value
+      Tetromino randomType= Tetromino.values[rand.nextInt(Tetromino.values.length)];
+      currPiece=Piece(type: randomType);
+      currPiece.initializePiece();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +125,22 @@ class _GameBoardState extends State<GameBoard> {
         ),
         // This is the slivergridelegatewithCrossAxisCount
         itemBuilder: (context, index) {
+          //Get the row and collumn for the current piece
+          int row = (index/rowLength).floor();
+          int col = index % rowLength;
+
+          //The current piece
           if(currPiece.position.contains(index)) {
             return Pixel(
               color: Colors.yellow,
               child: index,
             );
           }
+          //AFTER LANDING IT IS A BLANK PIXEL
+          else if (gameBoard[row][col] !=null)
+            {
+              return Pixel(color: Colors.pink, child: '');
+            }
           else{
             return Pixel(color: Colors.grey[900],
               child: index,
@@ -136,3 +152,4 @@ class _GameBoardState extends State<GameBoard> {
       );
   }
 }
+
