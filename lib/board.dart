@@ -31,34 +31,34 @@ class GameBoard extends StatefulWidget {
 class _GameBoardState extends State<GameBoard> {
 
 
-  
   //LETS CREATE THE CURRENT TETRIS PIECE
-  Piece currPiece =Piece(type: Tetromino.T);
+  //LETS CREATE THE CURRENT TETRIS PIECE
+  Piece currPiece = Piece(type: Tetromino.T);
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     //we start the game when the app starts
     startGame();
   }
-  void startGame(){
+
+  void startGame() {
     currPiece.initializePiece();
     //our frame refresh rate
-    Duration frameRate=const Duration(milliseconds: 400);
+    Duration frameRate = const Duration(milliseconds: 400);
     gameLoop(frameRate);
   }
-  void gameLoop(Duration frameRate){
+  void gameLoop(Duration frameRate) {
     Timer.periodic(
       frameRate,
-        (timer){
+          (timer) {
         setState(() {
-          //let us check for the landing
-          checkLanding();
-          //This will move the piece down
+          // This will move the piece down
           currPiece.movePiece(Direction.down);
+          // let us check for the landing
+          checkLanding();
         });
-
-        },
+      },
     );
   }
 
@@ -70,6 +70,11 @@ class _GameBoardState extends State<GameBoard> {
       //calculate the row and collumn for the current piece
       int row = (currPiece.position[i] / rowLength).floor();
       int col = currPiece.position[i] % rowLength;
+      // Check for collision with existing pieces
+      if (gameBoard[row][col] != null) {
+        return true;
+      }
+
       //Now lets adjust the row and collumn based on the direction
       if (direction == Direction.left) {
         col -= 1;
@@ -88,68 +93,125 @@ class _GameBoardState extends State<GameBoard> {
     // if no collisions detected we will return false
     return false;
   }
-    //we also check the tetris box landing and say
-    void checkLanding() {
-    if (checkCollision(Direction.down)){
-      //we mark the position as occupied by the game board
-      for(int i=0; i<currPiece.position.length; i++){
-        int row = (currPiece.position[i]/rowLength).floor();
-        int col = currPiece.position[i] % rowLength;
-        if(row>=0 && col>=0){
-          gameBoard[row][col]=currPiece.type;
 
+  //we also check the tetris box landing and say
+  void checkLanding() {
+    if (checkCollision(Direction.down)) {
+      //we mark the position as occupied by the game board
+      for (int i = 0; i < currPiece.position.length; i++) {
+        int row = (currPiece.position[i] / rowLength).floor();
+        int col = currPiece.position[i] % rowLength;
+        if (row >= 0 && col >= 0) {
+          gameBoard[row][col] = currPiece.type;
         }
       }
       //ONCE LANDED CREATE THE NEXT PIECE
       createNewPiece();
     }
-    }
-    void createNewPiece(){
+  }
+
+  void createNewPiece() {
     //create a random object to generate random tetromino types
-      Random rand= Random();
-      //create the new piece with any random type of integer value
-      Tetromino randomType= Tetromino.values[rand.nextInt(Tetromino.values.length)];
-      currPiece=Piece(type: randomType);
-      currPiece.initializePiece();
+    Random rand = Random();
+    //create the new piece with any random type of integer value
+    Tetromino randomType = Tetromino.values[rand.nextInt(
+        Tetromino.values.length)];
+    currPiece = Piece(type: randomType);
+    currPiece.initializePiece();
+  }
+
+  //Left
+  void moveLeft() {
+    //Make sure the move is valid before moving to the position you want
+    if (!checkCollision(Direction.left)) {
+      setState(() {
+        currPiece.movePiece(Direction.left);
+      });
+    }
+  }
+
+///Right
+  void moveRight() {
+    if (!checkCollision(Direction.right)) {
+      setState(() {
+        currPiece.movePiece(Direction.right);
+      });
+    }
+  }
+
+// Rotate
+  void rotatePiece() {
+    // TODO: Implement rotation logic
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: GridView.builder(
-        itemCount: rowLength*collength,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: rowLength,
-        ),
-        // This is the slivergridelegatewithCrossAxisCount
-        itemBuilder: (context, index) {
-          //Get the row and collumn for the current piece
-          int row = (index/rowLength).floor();
-          int col = index % rowLength;
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            //GAME CONTROLS
+            Expanded(
+              child: GridView.builder(
+                itemCount: rowLength * collength,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: rowLength,
+                ),
+                // This is the slivergridelegatewithCrossAxisCount
+                itemBuilder: (context, index) {
+                  //Get the row and collumn for the current piece
+                  int row = (index / rowLength).floor();
+                  int col = index % rowLength;
 
-          //The current piece
-          if(currPiece.position.contains(index)) {
-            return Pixel(
-              color: Colors.yellow,
-              child: index,
-            );
-          }
-          //AFTER LANDING IT IS A BLANK PIXEL
-          else if (gameBoard[row][col] !=null)
-            {
-              return Pixel(color: Colors.pink, child: '');
-            }
-          else{
-            return Pixel(color: Colors.grey[900],
-              child: index,
-            );
-          }
-  },
+                  //The current piece
+                  if (currPiece.position.contains(index)) {
+                    return Pixel(
+                      color: currPiece.color,
+                      child: index,
+                    );
+                  }
+                  //AFTER LANDING IT IS A BLANK PIXEL
+                  else if (gameBoard[row][col] != null) {
+                    final Tetromino? tetrominoType = gameBoard[row][col];
+                    return Pixel(
+                        color: tetrominoColors[tetrominoType], child: '');
+                  }
+                  else {
+                    return Pixel(color: Colors.grey[900],
+                      child: index,
+                    );
+                  }
+                },
 
+              ),
+            ),
+            //Game controls
+
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  //left
+                  IconButton(onPressed: moveLeft,
+                      color: Colors.white,
+                      icon: const Icon(Icons.arrow_back_ios_new)),
+                  //rotate
+                  IconButton(onPressed: rotatePiece,
+                      color: Colors.white,
+                      icon: const Icon(Icons.rotate_right)),
+                  //right
+                  IconButton(onPressed: moveRight,
+                      color: Colors.white,
+                      icon: const Icon(Icons.arrow_forward_ios)),
+                ],
+              ),
+            )
+          ],
         ),
       );
+    }
   }
-}
 
