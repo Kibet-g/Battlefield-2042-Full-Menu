@@ -33,7 +33,7 @@ class _GameBoardState extends State<GameBoard> {
 
   //LETS CREATE THE CURRENT TETRIS PIECE
   //LETS CREATE THE CURRENT TETRIS PIECE
-  Piece currPiece = Piece(type: Tetromino.T);
+  Piece currPiece = Piece(type: Tetromino.L);
 
   @override
   void initState() {
@@ -141,7 +141,7 @@ class _GameBoardState extends State<GameBoard> {
 
 // Rotate
   void rotatePiece() {
-    // TODO: Implement rotation logic
+    currPiece.rotatePiece();
   }
 
   @override

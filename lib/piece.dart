@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:tetris_game/board.dart';
+
 import 'values.dart';
 class Piece {
   // The type of the tetris piece
@@ -111,4 +113,119 @@ void movePiece(Direction direction){
   default:
     }
 }
+//Rotate piece
+int rotationState = 1;
+  void rotatePiece()
+  {
+    //new position
+    List<int> newPosition = [];
+    //rotate rge piece based on its type
+    switch(type){
+      case Tetromino.L:
+        switch(rotationState){
+          case 0:
+
+            newPosition= [
+              position[1]-rowLength,
+              position[1],
+              position[1]+rowLength,
+              position[1]+rowLength+1,
+            ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+
+        break;
+          case 1:
+            newPosition= [
+              position[1]-1,
+              position[1],
+              position[1]+1,
+              position[1]+rowLength-1,
+            ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+            break;
+          case 2:
+            newPosition= [
+              position[1]+rowLength,
+              position[1],
+              position[1]-rowLength,
+              position[1]-rowLength-1,
+            ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+            break;
+          case 3:
+            newPosition= [
+              position[1]-rowLength+1,
+              position[1],
+              position[1]+1,
+              position[1]-1,
+            ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+            break;
+        }
+
+        break;
+        default:
+    }
+    //check for valid position
+    bool positionIsValid(int position){
+      //get the row and collumn of the current position
+      int row=(position/rowLength).floor();
+      int col= position%rowLength;
+      //Now if the position is taken, return false
+      if (row<0 || col<0 || gameBoard[row][col] !=null){
+        return false;
+      }
+      //else we say that if position is valid so return true
+      else{
+        return true;
+      }
+
+  }
+  bool piecePositionIsValid(List<int> piecePosition){
+      bool firstColOccupied = false;
+      bool lastColOccupied = false;
+      for (int pos in piecePosition){
+        //return false if any position
+        if(!positionIsValid(pos)){
+          return false;
+        }
+        //get the col of position
+        int col=pos%rowLength;
+        //check if the first or last collumn is occupied
+        if (col==0){
+        firstColOccupied= true;
+        }
+        if (col== rowLength -1){
+          lastColOccupied= true;
+        }
+      }
+      //if there is a piece in the first and last col and last col it will automatically pass through the wall
+    return !(firstColOccupied && lastColOccupied );
+
+  }
+  }
 }
