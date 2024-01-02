@@ -417,6 +417,75 @@ int rotationState = 1;
                 break;
 
             }
+            break;
+          case Tetromino.Z:
+            switch(rotationState){
+              case 0:
+                newPosition=[
+                  position[0]+rowLength-2,
+                  position[1],
+                  position[2]+rowLength-1,
+                  position[3]+1
+                ];
+                //check if position is valid
+                if (piecePositionIsValid(newPosition)){
+                  //now lets update the position
+                  position=newPosition;
+                  //update rotation state
+                  rotationState= (rotationState+1)%4;
+                }
+                break;
+              case 1:
+                newPosition=[
+                  position[0]-rowLength+2,
+                  position[1],
+                  position[2]-rowLength+1,
+                  position[3]-1
+                ];
+                //check if position is valid
+                if (piecePositionIsValid(newPosition)){
+                  //now lets update the position
+                  position=newPosition;
+                  //update rotation state
+                  rotationState= (rotationState+1)%4;
+                }
+                break;
+              case 2:
+                newPosition=[
+                  position[0]+rowLength-2,
+                  position[1],
+                  position[2]+rowLength-1,
+                  position[3]+1
+                ];
+                //check if position is valid
+                if (piecePositionIsValid(newPosition)){
+                  //now lets update the position
+                  position=newPosition;
+                  //update rotation state
+                  rotationState= (rotationState+1)%4;
+                }
+                break;
+              case 3:
+                newPosition=[
+                  position[0]-rowLength+2,
+                  position[1],
+                  position[2]-rowLength+1,
+                  position[3]-1
+                ];
+                //check if position is valid
+                if (piecePositionIsValid(newPosition)){
+                  //now lets update the position
+                  position=newPosition;
+                  //update rotation state
+                  rotationState= (rotationState+1)%4;
+                }
+                break;
+            }
+            break;
+          case Tetromino.T:
+            switch(rotationState){
+              case 0:
+            }
         }
         default:
     }
