@@ -218,6 +218,7 @@ int rotationState = 1;
         }
 
         break;
+        //CASE TETROMINO.J
       case Tetromino.J:
         switch(rotationState){
           case 0:
@@ -284,6 +285,16 @@ int rotationState = 1;
             }
             break;
 
+        }
+      case Tetromino.I:
+        switch(rotationState){
+          case 0:
+            newPosition=[
+              position[1]-1,
+              position[1],
+              position[1]+1,
+              position[1]+2
+            ];
         }
         default:
     }
