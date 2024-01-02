@@ -237,9 +237,43 @@ int rotationState = 1;
             break;
           case 1:
             newPosition=[
-              position[1]-rowLength-1
+              position[1]-rowLength-1,
+              position[1],
+              position[1]-1,
+              position[1]+1
+            ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+            break;
+          case 2:
 
+            newPosition=[
+              position[1]+rowLength,
+              position[1],
+              position[1]-rowLength,
+              position[1]-rowLength+1
 
+          ];
+            //check if position is valid
+            if (piecePositionIsValid(newPosition)){
+              //now lets update the position
+              position=newPosition;
+              //update rotation state
+              rotationState= (rotationState+1)%4;
+            }
+            break;
+
+          case 3:
+            newPosition=[
+              position[1]+1,
+              position[1],
+              position[1]-1,
+              position[1]+rowLength+1
             ];
             //check if position is valid
             if (piecePositionIsValid(newPosition)){
