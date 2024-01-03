@@ -147,7 +147,25 @@ class _GameBoardState extends State<GameBoard> {
   void clearLines(){
     // 1:Loop through each row if the game from top to bottom
     for (int row= collength-1; row>=0; row--){
-      //2: Do an initialization to
+      //2: Do an initialization to by creating a variable to find if the row is full
+      bool rowIsFull=true;
+      //3:Check if the row is full all columns are filled with piece
+      for(int col=0; col<rowLength; col++) {
+        //now if there is an empty collumn set the row is full to false then break the loop
+        if (gameBoard[row][col] == null) {
+          rowIsFull = false;
+          break;
+        }
+      }
+      //4: If the row is full clear the row and shift down the rows
+      if (rowIsFull){
+        //5: We move all the cleared rows above the cleared row down by one position
+        for(int r=row; r>0; r--){
+          //we do copy the above row to the current row
+          gameBoard[r]=List.from(gameBoard[r-1]);
+        }
+        //6: W
+      }
     }
 
   }
