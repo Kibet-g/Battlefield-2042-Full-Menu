@@ -55,6 +55,8 @@ class _GameBoardState extends State<GameBoard> {
       frameRate,
           (timer) {
         setState(() {
+          //clear the lines
+          clearLines();
           // This will move the piece down
           currPiece.movePiece(Direction.down);
           // let us check for the landing
@@ -169,11 +171,22 @@ class _GameBoardState extends State<GameBoard> {
         //6: We now set the top row  to be empty
         gameBoard[0]=List.generate(row, (index) => null);
         //7: Increase the score
+        currentscore++;
       }
     }
 
   }
-
+  //Game over method
+  bool isGameOver(){
+    //check if there are any collumns in the top which are filled
+    for(int col=0; col<rowLength; col++){
+      if (gameBoard[0][col] !=null){
+        return true;
+      }
+    }
+    //if the top row is empty the game is not over
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
       return Scaffold(
