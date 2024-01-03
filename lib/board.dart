@@ -34,6 +34,8 @@ class _GameBoardState extends State<GameBoard> {
   //LETS CREATE THE CURRENT TETRIS PIECE
   //LETS CREATE THE CURRENT TETRIS PIECE
   Piece currPiece = Piece(type: Tetromino.L);
+  //CURRENT SCORE VARIABLE
+  int currentscore=0;
 
   @override
   void initState() {
@@ -164,7 +166,9 @@ class _GameBoardState extends State<GameBoard> {
           //we do copy the above row to the current row
           gameBoard[r]=List.from(gameBoard[r-1]);
         }
-        //6: W
+        //6: We now set the top row  to be empty
+        gameBoard[0]=List.generate(row, (index) => null);
+        //7: Increase the score
       }
     }
 
@@ -213,10 +217,13 @@ class _GameBoardState extends State<GameBoard> {
               ),
             ),
             //Game controls
-
+            //SCORE
+            Text('Score:$currentscore',
+            style: const TextStyle(color: Colors.white),
+            ),
 
             Padding(
-              padding: const EdgeInsets.only(bottom: 50.0),
+              padding: const EdgeInsets.only(bottom: 50.0, top: 50),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
