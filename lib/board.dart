@@ -143,6 +143,14 @@ class _GameBoardState extends State<GameBoard> {
   void rotatePiece() {
     currPiece.rotatePiece();
   }
+  //clear the lines
+  void clearLines(){
+    // 1:Loop through each row if the game from top to bottom
+    for (int row= collength-1; row>=0; row--){
+      //2: Do an initialization to
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
