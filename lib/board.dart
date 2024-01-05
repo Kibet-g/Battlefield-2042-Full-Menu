@@ -232,7 +232,7 @@ class _GameBoardState extends State<GameBoard> {
             //Game controls
             //SCORE
             Text('Score:$currentscore',
-            style: const TextStyle(color: Colors.white),
+            style:  TextStyle(color: Colors.white),
             ),
 
             Padding(
