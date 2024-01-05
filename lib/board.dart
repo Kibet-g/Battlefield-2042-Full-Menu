@@ -101,7 +101,9 @@ class _GameBoardState extends State<GameBoard> {
     gameOver=false;
     currentscore=0;
     //create new piece
-
+    createNewPiece();
+    //start game again
+    startGame();
   }
   //WE NEED TO CHECK THE FUTURE POSITIONS
   //RETURNS TRUE INCASE OF A COLLISION AND FALSE INCASE THERE IS NONE
