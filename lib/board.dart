@@ -78,8 +78,30 @@ class _GameBoardState extends State<GameBoard> {
   void showGameOverDialog(){
     showDialog(context: context, builder: (context)=>AlertDialog(
       title: Text('Game Over'),
-      content: Text("Your score is:" ),
-    ),);
+      content: Text("Your score is: $currentscore"),
+      actions: [
+        TextButton(onPressed:(){
+          //reset the game
+          resetGame();
+          Navigator.pop(context);
+        },child: Text('Play Again'))
+      ],
+    ),
+    );
+  }
+  void resetGame(){
+    //clear the gameBoard
+    gameBoard=List.generate(
+      collength,
+          (i) => List.generate(
+            rowLength,
+                (j)=>null,
+          ),
+    );
+    gameOver=false;
+    currentscore=0;
+    //create new piece
+
   }
   //WE NEED TO CHECK THE FUTURE POSITIONS
   //RETURNS TRUE INCASE OF A COLLISION AND FALSE INCASE THERE IS NONE
