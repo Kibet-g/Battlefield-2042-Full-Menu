@@ -37,6 +37,8 @@ class _GameBoardState extends State<GameBoard> {
   //CURRENT SCORE VARIABLE
   int currentscore=0;
 
+  bool gameOver=false;
+
   @override
   void initState() {
     super.initState();
@@ -57,15 +59,28 @@ class _GameBoardState extends State<GameBoard> {
         setState(() {
           //clear the lines
           clearLines();
+
+          checkLanding();
+          //check if the game is over
+          if(gameOver==true){
+            timer.cancel();
+            showGameOverDialog();
+          }
           // This will move the piece down
           currPiece.movePiece(Direction.down);
           // let us check for the landing
-          checkLanding();
+
         });
       },
     );
   }
-
+  //Game is over message
+  void showGameOverDialog(){
+    showDialog(context: context, builder: (context)=>AlertDialog(
+      title: Text('Game Over'),
+      content: Text("Your score is:" ),
+    ),);
+  }
   //WE NEED TO CHECK THE FUTURE POSITIONS
   //RETURNS TRUE INCASE OF A COLLISION AND FALSE INCASE THERE IS NONE
   bool checkCollision(Direction direction) {
@@ -122,6 +137,13 @@ class _GameBoardState extends State<GameBoard> {
         Tetromino.values.length)];
     currPiece = Piece(type: randomType);
     currPiece.initializePiece();
+    //This is since our game is now over condition there is a piece at the
+    //Top level you want to check  if the game is over when you create a new piece
+    //Instead of checking every frame because new pieces are allowed to go through
+    //The top level but if there is any piece in the top level when the new piece is created then game is over
+    if (isGameOver()){
+      gameOver=true;
+    }
   }
 
   //Left
@@ -134,7 +156,7 @@ class _GameBoardState extends State<GameBoard> {
     }
   }
 
-///Right
+//Right
   void moveRight() {
     if (!checkCollision(Direction.right)) {
       setState(() {
@@ -187,6 +209,7 @@ class _GameBoardState extends State<GameBoard> {
     //if the top row is empty the game is not over
     return false;
   }
+
   @override
   Widget build(BuildContext context) {
       return Scaffold(
