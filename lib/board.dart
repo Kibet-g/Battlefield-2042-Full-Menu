@@ -77,14 +77,14 @@ class _GameBoardState extends State<GameBoard> {
   //Game is over message
   void showGameOverDialog(){
     showDialog(context: context, builder: (context)=>AlertDialog(
-      title: Text('Game Over'),
+      title: const Text('Game Over'),
       content: Text("Your score is: $currentscore"),
       actions: [
         TextButton(onPressed:(){
           //reset the game
           resetGame();
           Navigator.pop(context);
-        },child: Text('Play Again'))
+        },child: const Text('Play Again'))
       ],
     ),
     );
@@ -258,18 +258,18 @@ class _GameBoardState extends State<GameBoard> {
                   if (currPiece.position.contains(index)) {
                     return Pixel(
                       color: currPiece.color,
-                      child: index,
+
                     );
                   }
                   //AFTER LANDING IT IS A BLANK PIXEL
                   else if (gameBoard[row][col] != null) {
                     final Tetromino? tetrominoType = gameBoard[row][col];
                     return Pixel(
-                        color: tetrominoColors[tetrominoType], child: '');
+                        color: tetrominoColors[tetrominoType]);
                   }
                   else {
                     return Pixel(color: Colors.grey[900],
-                      child: index,
+
                     );
                   }
                 },
@@ -279,7 +279,7 @@ class _GameBoardState extends State<GameBoard> {
             //Game controls
             //SCORE
             Text('Score:$currentscore',
-            style:  TextStyle(color: Colors.white),
+            style:  const TextStyle(color: Colors.white),
             ),
 
             Padding(
